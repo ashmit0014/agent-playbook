@@ -1,0 +1,16 @@
+title: Agent Playbook
+description: Operating rules for AI agents doing real work with little supervision.
+repository: ashmit0014/agent-playbook
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+exclude:
+  - skill/templates
+  - install.ps1
+  - private
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default

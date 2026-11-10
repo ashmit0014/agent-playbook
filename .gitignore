@@ -1,0 +1,5 @@
+# Private provenance lives in its own private repository, never in this one.
+private/
+_site/
+.jekyll-cache/
+*.tmp
