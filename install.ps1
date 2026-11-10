@@ -9,6 +9,8 @@
   and, unless -NoGlobalCore is given, makes the ~340-word Core always available:
     ~/.claude/CLAUDE.md  gets one import line inside a marked block
     ~/.codex/AGENTS.md   gets the Core text inside a marked block
+  For Claude Code it also adds one read-only permission to ~/.claude/settings.json,
+    Read(~/.claude/skills/agent-playbook/**), so sessions can open PLAYBOOK.md without a prompt.
   Everything outside the marked blocks is left untouched. -Uninstall removes exactly what this script added.
 
 .EXAMPLE
@@ -41,6 +43,23 @@ function Set-Block([string]$file, [string]$body) {
   [IO.File]::WriteAllText($file, $(if ($text) { "$text`n" } else { '' }), $utf8)
 }
 
+# Claude Code asks permission to read files outside the project; allow reading this skill's own folder only.
+$readRule = 'Read(~/.claude/skills/agent-playbook/**)'
+function Set-ReadAllow([string]$file, [bool]$add) {
+  if (-not (Test-Path $file)) { if (-not $add) { return }; [IO.File]::WriteAllText($file, '{}', $utf8) }
+  $json = [IO.File]::ReadAllText($file)
+  $s = if ($json.Trim()) { $json | ConvertFrom-Json } else { New-Object psobject }
+  if (-not $s.PSObject.Properties['permissions']) { $s | Add-Member permissions (New-Object psobject) }
+  $p = $s.permissions
+  $allow = @(); if ($p.PSObject.Properties['allow']) { $allow = @($p.allow) }
+  $allow = @($allow | Where-Object { $_ -ne $readRule })
+  if ($add) { $allow += $readRule }
+  if ($p.PSObject.Properties['allow']) { $p.allow = $allow } else { $p | Add-Member allow $allow }
+  if (-not $add -and $allow.Count -eq 0) { $p.PSObject.Properties.Remove('allow') }
+  if (-not $add -and @($p.PSObject.Properties).Count -eq 0) { $s.PSObject.Properties.Remove('permissions') }
+  [IO.File]::WriteAllText($file, ($s | ConvertTo-Json -Depth 32), $utf8)
+}
+
 $tools = @(
   @{ Name = 'Claude Code'; Root = Join-Path $TargetHome '.claude'; Global = 'CLAUDE.md' },
   @{ Name = 'Codex';       Root = Join-Path $TargetHome '.codex';  Global = 'AGENTS.md' }
@@ -53,6 +72,7 @@ foreach ($t in $tools) {
   if ($Uninstall) {
     if (Test-Path $skillDir) { Remove-Item -Recurse -Force $skillDir }
     if (Test-Path $globalFile) { Set-Block $globalFile '' }
+    if ($t.Name -eq 'Claude Code') { Set-ReadAllow (Join-Path $t.Root 'settings.json') $false }
     Write-Host "Removed from $($t.Name)."
     continue
   }
@@ -65,6 +85,7 @@ foreach ($t in $tools) {
   Copy-Item (Join-Path $src 'CORE.md'), (Join-Path $src 'PLAYBOOK.md') $skillDir
   $rev = ''
   try { $rev = (git -C $src rev-parse --short HEAD 2>$null) } catch {}
+  if ($t.Name -eq 'Claude Code') { Set-ReadAllow (Join-Path $t.Root 'settings.json') $true }
   [IO.File]::WriteAllText((Join-Path $skillDir 'VERSION'), "installed $(Get-Date -Format yyyy-MM-dd) from $src $rev`n", $utf8)
 
   if ($NoGlobalCore) {

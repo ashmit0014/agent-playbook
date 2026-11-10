@@ -26,6 +26,7 @@ git clone https://github.com/ashmit0014/agent-playbook "$HOME\agent-playbook"
 What it does:
 - Installs the `agent-playbook` skill for Claude Code (`~/.claude/skills`) and Codex (`~/.codex/skills`).
 - Adds a marked block to `~/.claude/CLAUDE.md` (an import of the Core) and `~/.codex/AGENTS.md` (the Core text), so every new session starts with the Core. Nothing outside the block is touched.
+- Adds one read-only permission to `~/.claude/settings.json`, `Read(~/.claude/skills/agent-playbook/**)`, so Claude Code can open the playbook sections without asking each time.
 - Skips any tool whose folder (`~/.claude` or `~/.codex`) does not exist.
 - Takes effect in new sessions. To check it worked, ask a new session to quote the first principle of the Agent Playbook Core.
 
