@@ -33,7 +33,7 @@ textarea:focus,input[type=text]:focus{outline:2px solid var(--accent);border-col
 </style>
 
 <h1>Agent Playbook</h1>
-<p class="lead">Rules for AI agents doing real work with little supervision, learned from real projects that failed and were corrected. To use it, pick your kind of work, copy the prompt, paste it into your agent. Nothing to install.</p>
+<p class="lead">Rules for AI agents doing real work with little supervision, learned from real projects that failed and were corrected. To use it, pick your kind of work, copy the prompt and paste it into your agent. Nothing to install. Only the New project prompt needs a file, and it is one download.</p>
 
 <h2 style="border:0;margin-top:.6em;padding:0">Starting something? Get your prompt.</h2>
 
@@ -62,13 +62,14 @@ textarea:focus,input[type=text]:focus{outline:2px solid var(--accent);border-col
 <div class="files" id="files"></div>
 <textarea class="out" id="out" readonly aria-label="Your prompt"></textarea>
 <div class="bar2"><button class="btn" id="copy" type="button">Copy prompt</button><span class="muted" id="count"></span></div>
+<p class="muted" id="next"></p>
 
 <h2>More</h2>
 <ul>
   <li><a href="{{ '/CORE.html' | relative_url }}">The Core</a>: the nine principles every prompt contains.</li>
   <li><a href="{{ '/PLAYBOOK.html' | relative_url }}">The full playbook</a>: the operating detail behind the prompts, for when you or the agent need it.</li>
   <li><a href="{{ '/REFERENCE.html' | relative_url }}">Reference</a> and <a href="{{ '/EVIDENCE.html' | relative_url }}">Evidence</a>: why each rule exists, the earlier rules it corrected, and what it rests on.</li>
-  <li>Downloads: <a href="#" data-dl="playbook">PLAYBOOK.md</a> · <a href="#" data-dl="core">CORE.md</a></li>
+  <li>Downloads: <a href="https://raw.githubusercontent.com/ashmit0014/agent-playbook/main/PLAYBOOK.md" data-dl="playbook">PLAYBOOK.md</a> · <a href="https://raw.githubusercontent.com/ashmit0014/agent-playbook/main/CORE.md" data-dl="core">CORE.md</a></li>
 </ul>
 
 <script type="text/plain" id="src-core">{% include_relative CORE.md %}</script>
@@ -89,6 +90,7 @@ document.addEventListener('click',function(e){var t=e.target.closest('[data-dl]'
 function val(name){var r=document.querySelector('input[name='+name+']:checked');return r?r.value:'';}
 function mineList(){return $('mine').value.split(',').map(function(s){return s.trim();}).filter(Boolean);}
 
+var NEXT={quick:'the agent says how it will check the result, does the task, and tells you what it verified.',project:'the agent reads your files, drafts a short plan (what done means, the biggest risk, what it decides versus what you decide), asks you one batch of questions with suggested defaults, writes its notes files, and starts on the riskiest part.',research:'the agent restates the question, asks you one batch of questions, then researches and reports the answer with how sure it is and what remains open.',writing:'the agent asks a few questions about audience and taste, then shows you a short sample before writing the whole thing.',continue:'the agent reads its notes, checks them against the actual work, tells you where things stand in a few lines, and carries on.'};
 var GOAL_LABEL={quick:'Task',project:'Goal of the project',research:'Question or task',writing:'What to write or make',continue:'What to focus on next (optional)'};
 
 function build(){
@@ -105,7 +107,7 @@ function build(){
 '\nWork by the principles below, scaled to a small single-session task. Don\'t create planning files. Start with two lines: what "done" means and how you will check it. Then do the work. Ask me only for facts only I hold. Finish with what you did, what you verified and how, and what you did not verify.\n\n'+CORE;
   }
   if(k==='project'){
-    files.unshift({name:'PLAYBOOK.md',tag:'req',dl:'playbook',why:'The full operating detail. The prompt tells the agent which sections to read and when. '+(folder?'Save it in the root of your project folder.':'Attach it to the chat.')});
+    files.unshift({name:'PLAYBOOK.md',tag:'req',dl:'playbook',why:'The full operating detail. The prompt tells the agent which sections to read and when. '+(folder?'Save it in the folder you open your agent in (your project folder).':'Attach it to the chat.')});
     p='I\'m starting a substantial project. I want you to lead it with a high degree of autonomy.\n\nGoal: '+g+'\n'+mineLine+
 '\nHow to work: follow the Agent Playbook. Its nine core principles are below. The full operating detail is in PLAYBOOK.md ('+loc+'). Read its §1, §2 and §4 now. Read any other section only when its situation comes up:\n'+
 '- §3: taste and creative decisions\n- §5: progress stalling\n- §6: using other models or reviewers\n- §7: context and session state\n- §8: choosing tools and effort\n- §9: reporting evidence\n\n'+CORE+
@@ -154,7 +156,7 @@ function build(){
   }
   if(k==='continue'){
     files.unshift(folder?
-      {name:'AGENTS.md, STATE.md, DECISIONS.md',tag:'req',dl:null,why:'Already in your project folder: the agent created them when the project started. If they are missing, the prompt asks the agent to rebuild them from the work.'}:
+      {name:'AGENTS.md, STATE.md, DECISIONS.md (and PLAYBOOK.md)',tag:'req',dl:null,why:'Nothing to download. Open your agent in the same project folder: these files should already be there, because the agent created them when the project started. If any are missing, the agent rebuilds them from the work.'}:
       {name:'Your saved "Project notes" and latest "State" block',tag:'req',dl:null,why:'Paste or attach them. The agent gave them to you at the end of the last session.'});
     p='Continue this project.'+(goal?' Next focus: '+goal+'.':'')+'\n'+mineLine+
 '\nBefore doing anything:\n'+
@@ -176,6 +178,7 @@ function build(){
   });
   $('files').innerHTML=h;
   $('count').textContent='about '+Math.round(p.split(/\s+/).length/10)*10+' words';
+  $('next').textContent='What happens next: '+NEXT[k];
 }
 function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 document.querySelectorAll('input[name=kind],input[name=mode]').forEach(function(r){r.addEventListener('change',build);});
