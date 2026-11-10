@@ -26,7 +26,7 @@ The rationale and evidence are not bundled. If the user asks why a rule exists, 
 - it will run autonomously for hours;
 - it touches irreversible things such as real data, money, publishing or production;
 - its result matters to people other than the user;
-- the user says it is serious.
+- the user says it is serious, or asks you to set up a project with the playbook.
 
 Do the kickoff below.
 
