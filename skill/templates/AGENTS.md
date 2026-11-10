@@ -2,7 +2,7 @@
 
 Read this at the start of every session. Current status is in `STATE.md`; settled decisions and abandoned approaches are in `DECISIONS.md`.
 
-**Operating principles.** This project follows the Agent Playbook Core: https://ashmit0014.github.io/agent-playbook/CORE.html. If it is installed, a local copy is at `~/.claude/skills/agent-playbook/` or `~/.codex/skills/agent-playbook/`. Read the playbook's operating detail one section at a time, when that section's trigger fires.
+**Operating principles.** This project follows the Agent Playbook Core (https://ashmit0014.github.io/agent-playbook/CORE.html). Read the playbook's operating detail one section at a time, when that section's trigger fires.
 
 ## Promise
 <What must be true at the end, in the owner's terms. If you cannot imagine it failing, rewrite it.>
@@ -27,4 +27,4 @@ Read this at the start of every session. Current status is in `STATE.md`; settle
 <Project-specific signs that work is not converging, and what changes of source are allowed: a different representation, a different producer, a smaller scope, or a stop.>
 
 ## Where things live
-<Key paths and commands, and the environment facts that cost time to rediscover.>
+<Key paths, commands, sources and tools, and the facts that cost time to rediscover. Leave this as TODO until they exist.>

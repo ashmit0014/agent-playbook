@@ -9,4 +9,5 @@ First public version.
 - **Tested before release:**
   - a blind usability review across four unrelated tasks, which added generative-task, unreachable-oracle, contested-claim, irreversible-operation and short-task handling;
   - a 20-claim fact-check against the primary records;
-  - fresh-agent onboarding tests of the install and kickoff path.
+  - live checks that Claude Code and Codex load the Core and find the skill;
+  - fresh-agent onboarding tests of three paths: a quick task, a serious software project in Codex, and an analysis task in a chat app. These added the no-files chat mode, section-by-section loading at kickoff, guidance for causal questions, and fixes to the install docs.

@@ -50,7 +50,7 @@ For any agent (Claude, Claude Code, Codex, others) doing substantial work with l
    - In writing and research: keep earlier drafts, datasets and source notes recoverable.
    - Afterwards, check that the result is what you meant.
 7. **Rule.** Before any irreversible operation (a production migration, a deletion, a send, a publish):
-   - rehearse the whole procedure on a faithful copy, at real scale and under real conditions;
+   - rehearse the whole procedure on a faithful copy, at real scale and under real conditions. For a database migration: copy the real database, run the migration, compare record counts and checksums, and keep an export from before the run;
    - write the rollback and abort criteria;
    - give the human a go/no-go summary;
    - after they authorise the real run, verify it with the same oracle you rehearsed with.
@@ -153,7 +153,7 @@ For single-session work where interruption is unlikely, keep state in the conver
 | Ordinary implementation, routine research and debugging | The normal lead model at default effort |
 | Locating, listing, extraction, inventory, deduplication | Cheaper subagents or scripts |
 | Defects in high-risk changes; sources you cannot reach | Another model family, bounded, one round |
-| Anything checkable by rule: formats, counts, hashes, diffs, state matrices, scans, drills | Deterministic scripts |
+| Anything checkable by rule: formats, counts, hashes, diffs, state matrices, scans, drills | Deterministic scripts. If you have no way to run code, say so at kickoff, and label figures as checked by hand or by the user |
 | Taste, real-world use, goal changes, authority | The human |
 
 - **Rule.** Build a tool, hook, harness or protocol only after the manual step has proven worth doing twice. Workflow is infrastructure, not the product; freeze it once it works.
@@ -182,3 +182,9 @@ Causal explanations, interpretations and forecasts are capped at **Supported**. 
 - **Default.** Keep rationale short when presenting results. Fluent explanation makes weak results look worth one more round.
 - **Default.** End substantial work with: what is done; what is verified and how; what is not verified; what you need from the human.
 - **Default.** For research: write the question and what would settle it first; stop when new sources stop changing the answer (saturation), not when sources run out; keep collection separate from synthesis; record what stays unresolved.
+- **Default.** For causal or attribution questions ("did X cause Y?", "how much is due to X?"), state at kickoff:
+  - which comparison could separate the cause from the baseline (the same period in earlier years, a control group, before and after with seasonality removed);
+  - what that comparison assumes;
+  - the strongest rival explanation.
+
+  If the data cannot separate them, say so and report a range, not a point split.

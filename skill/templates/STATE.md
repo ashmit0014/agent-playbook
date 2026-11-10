@@ -4,7 +4,7 @@ Overwrite this file at the end of every session; never append. Keep it to about 
 
 **Status (<date>):** <one line>
 
-**Owner's latest verdict, in their own words:** "<verbatim>" (<date>)
+**Owner's latest verdict, in their own words:** "<verbatim; at kickoff, quote the goal exactly as given>" (<date>)
 
 ## Verified (and how)
 - <claim> — <oracle used>
