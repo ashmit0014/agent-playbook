@@ -1,0 +1,190 @@
+---
+layout: default
+title: Agent Playbook
+---
+<style>
+.lead{font-size:1.08rem;color:var(--muted);margin:-.2em 0 1.4em}
+.step{margin:1.6em 0 .6em;font-weight:700}
+.step span{display:inline-block;width:1.6em;height:1.6em;line-height:1.6em;text-align:center;border-radius:50%;background:var(--accent);color:var(--accent-fg);font-size:.85em;margin-right:.45em}
+.choices{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.choice{display:block;border:1px solid var(--line);border-radius:10px;padding:11px 13px;cursor:pointer;background:var(--bg)}
+.choice:hover{border-color:var(--accent)}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice b{display:block;font-size:15.5px}
+.choice small{color:var(--muted);font-size:13.5px;line-height:1.4;display:block;margin-top:2px}
+.choice:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset;background:var(--card)}
+.choice:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg .choice{flex:1 1 260px}
+label.f{display:block;font-weight:600;margin:.9em 0 .3em;font-size:15px}
+label.f small{font-weight:400;color:var(--muted)}
+textarea,input[type=text]{width:100%;font:inherit;font-size:15px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+textarea:focus,input[type=text]:focus{outline:2px solid var(--accent);border-color:transparent}
+.files{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card);margin:.4em 0 1em}
+.files .row{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;padding:7px 0;border-top:1px solid var(--line)}
+.files .row:first-of-type{border-top:0}
+.files .tag{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:1px 7px;border-radius:5px;margin-left:6px}
+.req{background:var(--accent);color:var(--accent-fg)}.opt{border:1px solid var(--line);color:var(--muted)}
+.btn{background:var(--accent);color:var(--accent-fg);border:0;border-radius:8px;padding:9px 14px;font:600 14.5px system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.out{width:100%;min-height:260px;font:13.5px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--code)}
+.bar2{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:.5em 0}
+.muted{color:var(--muted);font-size:14px}
+</style>
+
+<h1>Agent Playbook</h1>
+<p class="lead">Rules for AI agents doing real work with little supervision, learned from real projects that failed and were corrected. To use it, pick your kind of work, copy the prompt, paste it into your agent. Nothing to install.</p>
+
+<h2 style="border:0;margin-top:.6em;padding:0">Starting something? Get your prompt.</h2>
+
+<div class="step"><span>1</span>What kind of work is it?</div>
+<div class="choices" id="kinds">
+  <label class="choice"><input type="radio" name="kind" value="quick"><b>Quick task</b><small>One sitting, low stakes. A fix, a draft, a question.</small></label>
+  <label class="choice"><input type="radio" name="kind" value="project" checked><b>New project</b><small>Software or product work over several sessions, with the agent leading.</small></label>
+  <label class="choice"><input type="radio" name="kind" value="research"><b>Research or analysis</b><small>Investigation, data analysis, audit, decision memo.</small></label>
+  <label class="choice"><input type="radio" name="kind" value="writing"><b>Writing or creative</b><small>Writing or design where your taste decides.</small></label>
+  <label class="choice"><input type="radio" name="kind" value="continue"><b>Continue a project</b><small>Resume something started with the New project prompt.</small></label>
+</div>
+
+<div class="step"><span>2</span>Where will you paste it?</div>
+<div class="seg" id="modes">
+  <label class="choice"><input type="radio" name="mode" value="folder" checked><b>An agent that works in a folder</b><small>Claude Code, Codex, or Fable/Opus in an editor or terminal</small></label>
+  <label class="choice"><input type="radio" name="mode" value="chat"><b>A chat app</b><small>Claude.ai, ChatGPT, or any chat where you attach files</small></label>
+</div>
+
+<div class="step"><span>3</span>Describe it <span class="muted" style="all:unset;color:var(--muted);font-weight:400">(optional; you can also edit the prompt afterwards)</span></div>
+<label class="f" for="goal" id="goal-label">Goal</label>
+<textarea id="goal" rows="2" placeholder="e.g. Build Sidekick, a personal assistant app that…"></textarea>
+<label class="f" for="mine">Your own files for the agent <small>(optional, comma-separated, e.g. SIDEKICK_BRIEF.md, data.csv)</small></label>
+<input type="text" id="mine" placeholder="BRIEF.md">
+
+<div class="step"><span>4</span>Put these files in place, then copy the prompt</div>
+<div class="files" id="files"></div>
+<textarea class="out" id="out" readonly aria-label="Your prompt"></textarea>
+<div class="bar2"><button class="btn" id="copy" type="button">Copy prompt</button><span class="muted" id="count"></span></div>
+
+<h2>More</h2>
+<ul>
+  <li><a href="{{ '/CORE.html' | relative_url }}">The Core</a>: the nine principles every prompt contains.</li>
+  <li><a href="{{ '/PLAYBOOK.html' | relative_url }}">The full playbook</a>: the operating detail behind the prompts, for when you or the agent need it.</li>
+  <li><a href="{{ '/REFERENCE.html' | relative_url }}">Reference</a> and <a href="{{ '/EVIDENCE.html' | relative_url }}">Evidence</a>: why each rule exists, the earlier rules it corrected, and what it rests on.</li>
+  <li>Downloads: <a href="#" data-dl="playbook">PLAYBOOK.md</a> · <a href="#" data-dl="core">CORE.md</a></li>
+</ul>
+
+<script type="text/plain" id="src-core">{% include_relative CORE.md %}</script>
+<script type="text/plain" id="src-playbook">{% include_relative PLAYBOOK.md %}</script>
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var SRC={core:$('src-core').textContent.trim()+'\n', playbook:$('src-playbook').textContent.trim()+'\n'};
+var CORE=SRC.core.slice(SRC.core.indexOf('\n1. ')+1).trim();
+
+function download(which){
+  var b=new Blob([SRC[which]],{type:'text/markdown'});var a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download=which==='core'?'CORE.md':'PLAYBOOK.md';document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);
+}
+document.addEventListener('click',function(e){var t=e.target.closest('[data-dl]');if(t){e.preventDefault();download(t.getAttribute('data-dl'));}});
+
+function val(name){var r=document.querySelector('input[name='+name+']:checked');return r?r.value:'';}
+function mineList(){return $('mine').value.split(',').map(function(s){return s.trim();}).filter(Boolean);}
+
+var GOAL_LABEL={quick:'Task',project:'Goal of the project',research:'Question or task',writing:'What to write or make',continue:'What to focus on next (optional)'};
+
+function build(){
+  var k=val('kind'), folder=val('mode')==='folder', goal=$('goal').value.trim(), mine=mineList();
+  var loc=folder?'in the project folder':'attached to this conversation';
+  var mineLine=mine.length?'Read these files first ('+loc+'): '+mine.join(', ')+'.\n':'';
+  var g=goal||'[describe it here]';
+  var save=folder?'updating STATE.md':'giving me an updated "State" block';
+  var p='', files=[];
+  if(mine.length) files.push({name:mine.join(', '),tag:'req',why:'Your own files. '+(folder?'Put them in the project folder.':'Attach them to the chat.'),dl:null});
+
+  if(k==='quick'){
+    p='Task: '+g+'\n'+mineLine+
+'\nWork by the principles below, scaled to a small single-session task. Don\'t create planning files. Start with two lines: what "done" means and how you will check it. Then do the work. Ask me only for facts only I hold. Finish with what you did, what you verified and how, and what you did not verify.\n\n'+CORE;
+  }
+  if(k==='project'){
+    files.unshift({name:'PLAYBOOK.md',tag:'req',dl:'playbook',why:'The full operating detail. The prompt tells the agent which sections to read and when. '+(folder?'Save it in the root of your project folder.':'Attach it to the chat.')});
+    p='I\'m starting a substantial project. I want you to lead it with a high degree of autonomy.\n\nGoal: '+g+'\n'+mineLine+
+'\nHow to work: follow the Agent Playbook. Its nine core principles are below. The full operating detail is in PLAYBOOK.md ('+loc+'). Read its §1, §2 and §4 now. Read any other section only when its situation comes up:\n'+
+'- §3: taste and creative decisions\n- §5: progress stalling\n- §6: using other models or reviewers\n- §7: context and session state\n- §8: choosing tools and effort\n- §9: reporting evidence\n\n'+CORE+
+'\n\nKickoff, before you build anything:\n'+
+'1. Draft the operating model in plain words:\n'+
+'   - the promise: what must be true at the end, in my terms;\n'+
+'   - how we will check each part, and which proxies not to trust;\n'+
+'   - the load-bearing risk, and its smallest real proof;\n'+
+'   - what you decide alone, and what I decide (taste, real-world use, success criteria, anything irreversible or external);\n'+
+'   - the stop triggers.\n'+
+'2. Ask me ONE batch of questions, only about facts that only I hold. Put your proposed default next to each one.\n'+
+(folder?
+'3. In the same reply, create these files in the project root:\n'+
+'   - AGENTS.md: the operating model, with gaps marked TODO(me). If you are Claude Code, also create CLAUDE.md containing only the line @AGENTS.md.\n'+
+'   - STATE.md: at most 30 lines, overwritten every session. It holds the status, what is verified and how, what is not verified, the next steps, open questions for me, and my latest verdict quoted exactly.\n'+
+'   - DECISIONS.md: one line per decision, plus a list of abandoned approaches.\n'
+:
+'3. In the same reply, give me two blocks of text to save:\n'+
+'   - a "Project notes" block: the operating model;\n'+
+'   - a "State" block: the status, what is verified and how, what is not, the next steps, and my latest verdict quoted exactly.\n'+
+'   At the end of every session, give me an updated State block.\n')+
+'4. Then start on the load-bearing risk, with any work that does not depend on my answers.\n\n'+
+'From then on: make technical decisions yourself, and record the ones a later session might reopen. Never present your own judgement of look or feel as mine. End every session by '+save+'.';
+  }
+  if(k==='research'){
+    files.unshift({name:'PLAYBOOK.md',tag:'opt',dl:'playbook',why:'Only for a long, multi-session investigation. The prompt works without it. '+(folder?'If you use it, put it in the project folder.':'If you use it, attach it.')});
+    p='I need a piece of research or analysis done properly.\n\nQuestion or task: '+g+'\n'+mineLine+
+'\nHow to work: follow the Agent Playbook principles below. If PLAYBOOK.md is '+loc+', also read its §1 and §9 before you start; it is optional.\n\n'+CORE+
+'\n\nFor this task:\n'+
+'- Start by writing three things: the exact question, what answer would settle it, and the decision it feeds. Then ask me one batch of questions, only about facts only I hold, with your proposed default for each.\n'+
+'- Prefer primary sources to summaries. A search snippet is not a source you have read. Trace any disputed claim back to its origin; copies of one origin count once. Treat model memory about current facts as unchecked until you verify it.\n'+
+'- Recompute every important number from the raw data.\n'+
+'- For "did X cause Y" or "how much is due to X" questions, say three things: which comparison could separate the cause from the baseline, what that comparison assumes, and the strongest rival explanation. If the data cannot separate them, give a range.\n'+
+'- Stop searching when new sources stop changing the answer, not when sources run out. Keep collecting separate from concluding.\n'+
+'- Label key claims Verified / Supported / Plausible / Inferred / Contested / Unknown. Causal claims and forecasts are at most Supported.\n'+
+'- Deliver four things: the answer; the evidence and its grade; the strongest counter-case; and what remains unresolved, with what would resolve it.';
+  }
+  if(k==='writing'){
+    p='Writing or creative work: '+g+'\n'+mineLine+
+'\nWork by the principles below. For this kind of work:\n'+
+'- Ask me once for anything only I know: the audience, length and tone, and one or two examples of work I like if my reference is broad.\n'+
+'- Show me a short sample in final form (a paragraph, a page or one screen) before you make the whole thing.\n'+
+'- Draft and revise against specific, named features of the brief and the references. Critiquing your own drafts is expected, but whether the result is right is my call. Don\'t describe your own output as better or more polished.\n'+
+'- If two rounds of my feedback name the same problem, change the approach (structure, voice, form), not just the wording.\n'+
+'- Keep the best version so far, and never overwrite it with a weaker one.\n\n'+CORE;
+  }
+  if(k==='continue'){
+    files.unshift(folder?
+      {name:'AGENTS.md, STATE.md, DECISIONS.md',tag:'req',dl:null,why:'Already in your project folder: the agent created them when the project started. If they are missing, the prompt asks the agent to rebuild them from the work.'}:
+      {name:'Your saved "Project notes" and latest "State" block',tag:'req',dl:null,why:'Paste or attach them. The agent gave them to you at the end of the last session.'});
+    p='Continue this project.'+(goal?' Next focus: '+goal+'.':'')+'\n'+mineLine+
+'\nBefore doing anything:\n'+
+(folder?
+'1. Read AGENTS.md (or CLAUDE.md), STATE.md and DECISIONS.md in the project root. If PLAYBOOK.md is there, use it the way AGENTS.md says. If these files don\'t exist, create them from what you find before continuing.\n'
+:'1. Read the Project notes and the latest State block I have pasted or attached. If PLAYBOOK.md is attached, use it the way the notes say.\n')+
+'2. Check the actual work: the code, files, git history or data. Where the notes and the work disagree, trust the work and fix the notes.\n'+
+'3. Don\'t revive anything recorded as abandoned without new evidence.\n'+
+'4. Tell me in at most 8 lines where things stand, what is verified, what is not, and what you will do next. Then proceed.\n\n'+
+'End the session by '+save+'.\n\nPrinciples:\n'+CORE;
+  }
+  $('out').value=p;
+  $('goal-label').textContent=GOAL_LABEL[k];
+  var h='';
+  if(!files.length){h='<div class="row"><div><b>No files needed.</b> The prompt is self-contained.</div></div>';}
+  files.forEach(function(f){
+    h+='<div class="row"><div><code>'+esc(f.name)+'</code><span class="tag '+f.tag+'">'+(f.tag==='req'?'required':'optional')+'</span><br><span class="muted">'+esc(f.why)+'</span></div>'+
+      (f.dl?'<button class="btn ghost" type="button" data-dl="'+f.dl+'">Download</button>':'')+'</div>';
+  });
+  $('files').innerHTML=h;
+  $('count').textContent='about '+Math.round(p.split(/\s+/).length/10)*10+' words';
+}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+document.querySelectorAll('input[name=kind],input[name=mode]').forEach(function(r){r.addEventListener('change',build);});
+$('goal').addEventListener('input',build);$('mine').addEventListener('input',build);
+$('copy').addEventListener('click',function(){
+  var t=$('out').value, b=$('copy');
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(function(){$('out').select();document.execCommand('copy');})
+  .then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy prompt';},1500);});
+});
+build();
+})();
+</script>

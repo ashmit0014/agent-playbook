@@ -6,9 +6,8 @@ kramdown:
   input: GFM
   hard_wrap: false
 exclude:
-  - skill/templates
-  - install.ps1
   - private
+  - README.md
 defaults:
   - scope:
       path: ""

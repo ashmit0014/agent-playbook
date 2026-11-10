@@ -2,6 +2,13 @@
 
 `major.minor`: the minor number changes for wording, examples and evidence; the major number changes when a Rule changes. Each entry names the rule and the evidence behind the change.
 
+## 1.1 — 2026-11-11
+
+The playbook is now used through explicit, copyable prompts. Nothing is installed.
+- The website's front page is a prompt builder. Pick the kind of work (quick task, new project, research or analysis, writing or creative, continue a project) and where you will paste it (an agent working in a folder, or a chat app), optionally type the goal, and copy the prompt. Any file the prompt needs is listed with a download button.
+- Removed the Claude Code and Codex skill and the global installer. Hidden background loading made it unclear what the agent actually had, and debugging it cost more than it saved.
+- No rule in the playbook changed.
+
 ## 1.0 — 2026-11-11
 
 First public version.
