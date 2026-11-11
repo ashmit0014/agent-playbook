@@ -1,3 +1,8 @@
+<!-- profile-editorial-cover -->
+<picture>
+  <img src=".github/project-cover.png" alt="agent-playbook by Ashmit Kundu" width="100%" />
+</picture>
+
 # Agent Playbook
 
 **Operating rules for AI agents (Claude, Fable, Opus, Codex, ChatGPT and others) doing real work with little supervision.** It covers software, research, analysis, writing, planning and audits. The rules are distilled from real projects that failed, were measured and were corrected, not from generic productivity advice.
