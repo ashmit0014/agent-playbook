@@ -18,6 +18,12 @@ A revalidation pass against current vendor documentation and research. No new Co
 - **Start page:** plain-language choices and short help that opens only on demand, for first-time users; a wider layout and larger type; the prompt shown as the main output.
 - **Labels:** fresh-session cost economics are now labelled Current models.
 
+**Tested:**
+- Continue, on three different project fixtures.
+- Cold-start resumability.
+- A planted instruction in a project file. It was never obeyed; reporting it was inconsistent, so the Core and the Continue prompt now ask for it explicitly.
+- A first-time-user walkthrough. Details are in REFERENCE.md §6.
+
 **Removed:**
 - "Automation has running costs", folded into the harness-expiry rule.
 - The separate autonomy bullet, folded into the decision table.
