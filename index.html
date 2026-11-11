@@ -197,7 +197,7 @@ function build(){
   }
   if(k==='continue'){
     files.unshift(folder?
-      {name:'Nothing to download',tag:'opt',dl:null,why:'Open your AI tool in the existing project folder. The AI finds whatever notes the project already has (README, plans, state or decision files, git history). The project does not need to have started here.'}:
+      {name:'Nothing to download',tag:null,dl:null,why:'Open your AI tool in the existing project folder. The AI finds whatever notes the project already has (README, plans, state or decision files, git history). The project does not need to have started here.'}:
       {name:'Whatever describes where the work stands',tag:'req',dl:null,why:'Attach or paste your latest notes, a summary or the key files. If you have no notes, add a few lines saying what the project is and what was done last.'});
     p='Continue this project.'+(goal?' Next focus: '+goal+'.':'')+'\n'+mineLine+
 '\nThis project may or may not have been set up with the Agent Playbook. Do not assume any particular file layout, and do not restart planning.\n\n'+
@@ -217,7 +217,7 @@ function build(){
   var h='';
   if(!files.length){h='<div class="row"><div><b>No files needed.</b> <span class="why">The prompt is self-contained.</span></div></div>';}
   files.forEach(function(f){
-    h+='<div class="row"><div><code>'+esc(f.name)+'</code><span class="tag '+f.tag+'">'+(f.tag==='req'?'required':'optional')+'</span><div class="why">'+esc(f.why)+'</div></div>'+
+    h+='<div class="row"><div>'+(f.tag?'<code>'+esc(f.name)+'</code><span class="tag '+f.tag+'">'+(f.tag==='req'?'required':'optional')+'</span>':'<b>'+esc(f.name)+'</b>')+'<div class="why">'+esc(f.why)+'</div></div>'+
       (f.dl?'<button class="btn ghost" type="button" data-dl="'+f.dl+'" aria-label="Download '+f.dl.toUpperCase()+'.md">Download</button>':'')+'</div>';
   });
   $('files').innerHTML=h;
@@ -230,7 +230,7 @@ function build(){
     '<p>You can edit the prompt before sending it, for example to add details.</p>';
   $('later').innerHTML=k==='quick'||k==='writing'?
     '<p>For work that spans several sittings, choose <b>New project</b> or <b>Continue a project</b> instead.</p>':
-    (folder?'<p>Choose <b>Continue a project</b> here, copy that prompt, and paste it into a new conversation opened in the same folder. The AI works out where things stand from the project's files.</p>':
+    (folder?'<p>Choose <b>Continue a project</b> here, copy that prompt, and paste it into a new conversation opened in the same folder. The AI works out where things stand from the files in the project.</p>':
             '<p>At the end of each session, save the summary the AI gives you. Next time, choose <b>Continue a project</b> and attach or paste that summary.</p>');
 }
 document.querySelectorAll('input[name=kind],input[name=mode]').forEach(function(r){r.addEventListener('change',build);});
