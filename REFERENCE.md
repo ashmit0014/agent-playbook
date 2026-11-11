@@ -1,6 +1,6 @@
 # Agent Playbook — Reference
 
-*v1.0 · 2026-11-11*
+*v1.2 · 2026-11-12*
 
 Why the rules in [PLAYBOOK.md](PLAYBOOK.md) exist, where they stop applying, which earlier rules they replaced, and how the playbook was tested. Read this when a rule seems wrong for your situation, when two rules conflict, or before you change the playbook. It is not meant to be loaded into an agent's context by default.
 
@@ -229,6 +229,46 @@ The labels (Verified / Supported / Plausible / Inferred / Contested / Unknown) a
 
 "Contested" and the cap on causal and forecast claims were added after the blind review (§6). The earlier labels could not express a historical "why".
 
+### 2.11 Trust boundaries and enforcement (added in 1.2)
+
+**Why it was missing.** None of the original cases was attacked through its inputs, so the 1.0 playbook covered real devices and real data but not untrusted content. An outside review pointed out the gap. The broader issue is that an agent's safety depends on the whole system it runs in, not only the model's judgment: instructions, tools, environment, credentials and the content it reads.
+
+**Grounds for "data is not instruction".**
+- Anthropic's research on prompt-injection defenses describes the threat as adversarial instructions hidden in content the model processes, and states that no browser agent is immune.
+- OpenAI's Codex security documentation warns that injected content can make an agent fetch and follow untrusted instructions, and advises treating web results as untrusted.
+- Both vendors rely on approvals, sandboxes and network limits as well as on model training, not on training alone.
+
+**Grounds for "instructions are advisory; boundaries are enforced".**
+- **Vendor documentation.** Claude Code's own documentation says instruction files are treated "as context, not enforced configuration". It says hooks give deterministic control and settings rules are enforced "regardless of what Claude decides".
+- **Case D.** The second phone incident happened after a written device rule was already in place.
+- **Case A.** It held its frozen criteria and human-owned reference files with enforced mechanisms: a pre-commit hook, deny rules and schema-checked review records. The implementing agent could not have edited them even by mistake.
+- **This project.** When an installer tried to add a permission rule to the agent's own settings, the tool's safety classifier refused, which is the intended behaviour.
+
+**Limits.**
+- Enforcement mechanisms are partial too. Claude Code's sandbox, for example, covers shell commands only and does not run on native Windows.
+- Hence the rule says "where the stakes justify it and a mechanism exists". It never treats any single mechanism as a guarantee.
+
+### 2.12 Every harness component expires (added in 1.2)
+
+**Grounds.**
+- Anthropic's harness-design work (March 2026) says that every component of a harness encodes an assumption about what the model cannot do on its own, and that these assumptions go stale as models improve. It reports removing a planning construct and context resets for newer models. It also kept an evaluator for tasks beyond what the model handles reliably, so the lesson is to re-test each component, not to strip them all.
+- Community reports (self-report, Hacker News 2026) point both ways. Some users found a popular large skill pack had become unnecessary or harmful with newer models. Others keep small process skills because models still skip steps without them.
+- This project removed its own skill and global installer once it became clear they cost more debugging than they saved.
+
+**Consolidation.** The 1.0 rules "build tooling only after the manual step proves itself" and "automation has running costs" are now one rule: every component, including this playbook, is a hypothesis that must keep paying for itself and must be re-tested when the model or tool changes. The Current-models label marks the parts most likely to expire.
+
+### 2.13 Continuing and resuming (added in 1.2)
+
+**What went wrong.** The 1.1 Continue prompt assumed every project had been started by this playbook. It told the agent to read AGENTS.md, STATE.md and DECISIONS.md, and to create them if missing. For a project with its own conventions, that would have produced a second, competing record, which is exactly what §7's "one home per fact" warns against.
+
+**The fix.** Continuing now starts by discovering how the project already records itself (instruction files, plans, notes, decision records, issue lists, git history). It checks those notes against the actual work, keeps the project's conventions, and adds a record only where none is usable.
+
+**Cold-start resumability as the oracle.**
+- A state file existing does not show that a project can be resumed, just as a pushed repository does not show that a project can be recovered (§2.1).
+- The matching drill is to give a fresh agent only the durable files and a continuation prompt, and check whether it reconstructs the goal, what is verified, what is open, what was abandoned and the next step.
+- It is a Default for long or high-value work, not a ceremony for every project.
+- Support: it is inferred from the restore-drill evidence and from Case D, where a fresh session lost the owner's decisive sentence. It was tested on three fixtures before release (§6).
+
 ## 3. Corrections to earlier rules
 
 | # | Earlier rule or belief | What happened | Now |
@@ -254,6 +294,10 @@ The labels (Verified / Supported / Plausible / Inferred / Contested / Unknown) a
 | 19 | Postmortems prevent recurrence | The same failure recurred twice with its lesson already written | Lessons become structure: ownership at kickoff, pre-agreed stop rules |
 | 20 | A two-model comparison tests model ability | It tested one component, while the complaint was about the whole | Check that the variable can answer the latest complaint |
 | 21 | Image quality needs better metrics | No metric tracked the owner's preference; exact technical equivalence did not predict perceived benefit | Human judgment on real output beside references; metrics only for integrity |
+| 22 | Install the playbook as a skill, plus a global always-on Core (1.0) | It took more debugging (did the skill load? file permissions) than it saved, and hid what the agent had received | Explicit prompts the human copies and pastes; nothing installed |
+| 23 | Continuing a project means reading this playbook's own state files (1.1) | Most projects use other conventions; forcing the schema creates a competing record | Discover and keep the project's own conventions; check them against the work |
+| 24 | Cheaper models for extraction and summaries | A summary that decides what the lead sees is a judgment; cheaper models can be good at locating and worse at fact-checking | Match capability to the cost of a mistake; pass source pointers; escalate doubts |
+| 25 | Delegation is a context saver | Helpers cost inference, latency and coordination; the vendor's own multi-agent system used about 15× the tokens of a chat | Delegation must pay for itself: parallel, independent, isolating or reach |
 
 ## 4. Conditional distinctions
 
@@ -317,5 +361,5 @@ These are not yet rules.
 
 - Change a rule only on new evidence that is stronger than what supports it now. Record the change in the [changelog](CHANGELOG.md) and the support in [EVIDENCE.md](EVIDENCE.md).
 - If the change overturns an earlier rule, add a row to §3 here.
-- Recheck the **Current models** items whenever the models or tools you use change materially. They are the parts most likely to go stale.
+- When the models or tools you use change materially, do a small revalidation, not a rewrite. Re-test the **Current models** items and any rule that exists to compensate for a model weakness. Downgrade, rewrite or remove what no longer improves results (§2.12).
 - Keep [CORE.md](CORE.md) at about 350 words and [PLAYBOOK.md](PLAYBOOK.md) under about 4,000. When they grow, merge rules that turn out to be one principle; do not add a section per failure.

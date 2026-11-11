@@ -5,24 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% if page.title and page.title != site.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
 <meta name="description" content="{{ site.description }}">
+<meta property="og:title" content="{{ page.title | default: site.title }}">
+<meta property="og:description" content="{{ site.description }}">
+<meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f5d50'/%3E%3Cpath d='M9 22V10h7a4 4 0 0 1 0 8H9' stroke='white' stroke-width='3' fill='none'/%3E%3C/svg%3E">
 <style>
 :root{--bg:#fbfaf7;--fg:#1d2321;--muted:#5d6764;--line:#e2dfd7;--card:#f2efe8;--accent:#2f5d50;--accent-fg:#fff;--code:#efece4}
 @media (prefers-color-scheme:dark){:root{--bg:#141716;--fg:#e6e9e7;--muted:#9aa5a1;--line:#2b302e;--card:#1c201f;--accent:#7fc0ab;--accent-fg:#0e1211;--code:#222725}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font:16.5px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.62 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 a{color:var(--accent)}
 header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
 .bar{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-.brand{font-weight:700;color:var(--fg);text-decoration:none;letter-spacing:-.01em}
-nav.top{display:flex;gap:4px;flex-wrap:wrap;font-size:14.5px}
+.brand{font-weight:700;color:var(--fg);text-decoration:none;letter-spacing:-.01em;margin-right:6px}
+.brand:before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--accent);margin-right:8px;vertical-align:1px}
+nav.top{display:flex;gap:2px;flex-wrap:wrap;font-size:15px}
 nav.top a{color:var(--muted);text-decoration:none;padding:4px 9px;border-radius:6px}
 nav.top a:hover{color:var(--fg);background:var(--card)}
 nav.top a.on{color:var(--fg);background:var(--card);font-weight:600}
 .wrap{max-width:1120px;margin:0 auto;padding:28px 16px 64px;display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
 @media (min-width:1000px){.wrap.has-toc{grid-template-columns:minmax(0,760px) 230px;justify-content:center}}
 article{min-width:0;max-width:760px;margin:0 auto;width:100%}
+article.wide{max-width:940px}
 aside.toc{display:none}
 @media (min-width:1000px){aside.toc{display:block;position:sticky;top:70px;align-self:start;font-size:13.5px;max-height:calc(100vh - 90px);overflow:auto}}
 aside.toc b{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
@@ -31,7 +36,8 @@ aside.toc a:hover{color:var(--fg)}
 details.toc-m{margin:0 0 20px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14.5px}
 @media (min-width:1000px){details.toc-m{display:none}}
 details.toc-m a{display:block;padding:3px 0;text-decoration:none}
-h1{font-size:2rem;line-height:1.2;letter-spacing:-.02em;margin:.2em 0 .5em}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1{font-size:2.1rem;line-height:1.2;letter-spacing:-.02em;margin:.2em 0 .5em}
 h2{font-size:1.35rem;margin:2.2em 0 .6em;padding-top:.4em;border-top:1px solid var(--line);letter-spacing:-.01em}
 h3{font-size:1.08rem;margin:1.8em 0 .5em}
 h2,h3{scroll-margin-top:70px}
@@ -60,7 +66,7 @@ footer.site .bar{padding:18px 16px}
 <header class="site"><div class="bar">
   <a class="brand" href="{{ '/' | relative_url }}">Agent Playbook</a>
   <nav class="top">
-    <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="on"{% endif %}>Start</a>
+    <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="on"{% endif %}>Get a prompt</a>
     <a href="{{ '/CORE.html' | relative_url }}" {% if p == '/CORE' %}class="on"{% endif %}>Core</a>
     <a href="{{ '/PLAYBOOK.html' | relative_url }}" {% if p == '/PLAYBOOK' %}class="on"{% endif %}>Playbook</a>
     <a href="{{ '/REFERENCE.html' | relative_url }}" {% if p == '/REFERENCE' %}class="on"{% endif %}>Reference</a>
@@ -69,7 +75,7 @@ footer.site .bar{padding:18px 16px}
   </nav>
 </div></header>
 <div class="wrap" id="wrap">
-<article id="doc">
+<article id="doc"{% if page.wide %} class="wide"{% endif %}>
 {{ content }}
 </article>
 </div>

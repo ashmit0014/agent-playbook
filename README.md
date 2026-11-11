@@ -24,7 +24,7 @@ The site offers five prompts:
 | **New project** | Software or product work over several sessions, with the agent leading | `PLAYBOOK.md` (required) in the project root. The agent creates `AGENTS.md`, `STATE.md` and `DECISIONS.md` itself |
 | **Research or analysis** | Investigations, data analysis, audits, decision memos | None. `PLAYBOOK.md` is optional for long investigations |
 | **Writing or creative** | Writing and design where your taste decides | None |
-| **Continue a project** | Resuming a project started with *New project* | The project's own `AGENTS.md`, `STATE.md` and `DECISIONS.md`, or your saved notes in a chat app |
+| **Continue a project** | Resuming any existing project, whether or not it started here | None. The agent finds and keeps the project's own notes and conventions; in a chat app, attach or paste whatever notes you have |
 
 Every prompt contains the nine-principle [Core](CORE.md). The new-project prompt also points the agent at specific sections of `PLAYBOOK.md`, to be read when they become relevant.
 
@@ -45,8 +45,8 @@ It is not a framework, a plugin or an agent platform. It does not try to make ag
 
 | File | What it is |
 |---|---|
-| [CORE.md](CORE.md) | Nine principles, about 340 words. Included in every prompt |
-| [PLAYBOOK.md](PLAYBOOK.md) | The operating layer: decision rules, defaults, stop conditions, review, context, resources. About 3,500 words |
+| [CORE.md](CORE.md) | Nine principles, about 400 words. Included in every prompt |
+| [PLAYBOOK.md](PLAYBOOK.md) | The operating layer: decision rules, defaults, stop conditions, review, context, resources. About 4,100 words |
 | [REFERENCE.md](REFERENCE.md) | Why each rule exists, the earlier rules it corrected, conditional rules, how it was tested |
 | [EVIDENCE.md](EVIDENCE.md) | What each rule rests on: cases, measurements, external sources |
 | [CHANGELOG.md](CHANGELOG.md) | Version history |
@@ -61,6 +61,10 @@ Every rule in the playbook carries one of these labels:
 - **Provisional hypotheses** are listed in [REFERENCE.md](REFERENCE.md) §7, outside the playbook, until evidence promotes or drops them.
 
 A rule changes only on evidence stronger than what supports it now. Each change gets a [CHANGELOG](CHANGELOG.md) line and an [EVIDENCE.md](EVIDENCE.md) row. If it overturns an earlier rule, it also gets a row in the corrections table in [REFERENCE.md](REFERENCE.md) §3. Versions are `major.minor`: minor for wording, prompts and evidence; major when a Rule changes.
+
+## License
+
+No license has been chosen yet, so all rights are reserved by default: you may read and link to this material, but not reuse it.
 
 ## Provenance
 

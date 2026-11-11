@@ -1,6 +1,6 @@
 # Agent Playbook — Evidence
 
-*v1.0 · 2026-11-11*
+*v1.2 · 2026-11-12*
 
 What each part of the playbook rests on, and how much weight each kind of support deserves. The cases (A–G) are described in [REFERENCE.md](REFERENCE.md) §1.
 
@@ -66,6 +66,13 @@ A **Rule** in the playbook has P or M support from more than one kind of work, o
 | §9 | Model memory is Plausible at best | P, V | E, F |
 | §9 | Snippet ≠ read source; trace claims to their origin | P, I | E; blind review |
 | §9 | Never grade your own subjective output; short rationale | P, O | D, E |
+| §4 | Data is not instruction; least access | X, V | Vendor prompt-injection research and security docs (below) |
+| §4 | Instructions are advisory; enforce costly limits | V, P | Claude Code docs; A (enforced guards), D (incident despite a written rule) |
+| §6.6 | Delegation must pay for itself | X, V, P | Vendor multi-agent report (about 15× chat tokens); F, this synthesis |
+| §6.7 | Match capability to the cost of a mistake; keep source pointers | P, I | E (fact-checking needs full reads); this project's fact-check |
+| §7 | Continue with the project's own conventions; test resumability with a fresh agent | P, I, M | D (lost decisive sentence); 1.1 prompt defect; fixture tests in 1.2 |
+| §7 | Memory and notes are claims until checked | P, V | G (four stale status claims); vendor memory docs recommend pruning and consolidating stale entries |
+| §8 | Every harness component is a hypothesis; re-test on model change | V, X-part, P | Vendor harness-design post; community self-reports (both directions); this project's removed skill |
 
 ## Measurements
 
@@ -104,7 +111,14 @@ These were read during the research on 2026-11-10; the grades are those recorded
 | Anthropic, [Building a C compiler](https://www.anthropic.com/research/building-c-compiler) | Long autonomous work succeeded where a human built and reworked the verifiers | Vendor report |
 | Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | Context as a finite resource; progressive disclosure | Vendor |
 | Claude Code docs: [memory](https://code.claude.com/docs/en/memory), [what survives compaction](https://code.claude.com/docs/en/context-window.md#what-survives-compaction), [skills](https://code.claude.com/docs/en/skills.md) | What is always loaded, what is re-read after compaction, what loads on demand | Vendor; checked 2026-11-10 |
+| Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (Mar 2026) | Harness components encode assumptions about model limits that go stale; re-test them | Vendor; full read 2026-11-12 |
+| Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) | Multi-agent runs used about 15× the tokens of chat; weak where agents share context or depend on each other | Vendor report |
+| Anthropic, [Prompt injection defenses](https://www.anthropic.com/research/prompt-injection-defenses) | Injected instructions in processed content; no agent is immune | Vendor research |
+| OpenAI, [Codex approvals and security](https://learn.chatgpt.com/docs/agent-approvals-security) | Treat web results as untrusted; sandbox and approvals as boundaries | Vendor docs |
+| Claude Code docs: [memory](https://code.claude.com/docs/en/memory), [hooks](https://code.claude.com/docs/en/hooks-guide), [sandboxing](https://code.claude.com/docs/en/sandboxing), [security](https://code.claude.com/docs/en/security) | Instruction files are context, not enforcement; hooks and settings are enforced; the sandbox is partial | Vendor; checked 2026-11-12 |
+| Anthropic memory tool docs and Managed Agents "dreams" docs | Memory stores accumulate stale and contradictory entries; consolidate and prune | Vendor docs |
 | Practitioner threads (Hacker News, Reddit) on agent-built software, self-scored UI, long-running goals and review loops | Patterns consistent with the cases; never the only support for a Rule | Self-report; partial to full reads |
+| Hacker News threads on a popular skill pack (2026) | Some users report it became unnecessary or harmful with newer models; others keep small process skills | Self-report; full reads |
 
 ## Known gaps
 
