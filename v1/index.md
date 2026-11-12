@@ -13,7 +13,7 @@ The documents are kept exactly as published:
 - [Reference](REFERENCE.html): why each rule existed, and the corrections made along the way
 - [Evidence](EVIDENCE.html): what each rule rested on
 
-The exact files, including the v1 prompt builder, are in the git tags [`v1.0`](https://github.com/ashmit0014/agent-playbook/tree/v1.0), [`v1.1`](https://github.com/ashmit0014/agent-playbook/tree/v1.1) and [`v1.2`](https://github.com/ashmit0014/agent-playbook/tree/v1.2).
+The text is unchanged; only links to files that moved were updated. The exact files, including the v1 prompt builder, are in the git tags [`v1.0`](https://github.com/ashmit0014/agent-playbook/tree/v1.0), [`v1.1`](https://github.com/ashmit0014/agent-playbook/tree/v1.1) and [`v1.2`](https://github.com/ashmit0014/agent-playbook/tree/v1.2).
 
 ## What went wrong
 

@@ -60,7 +60,7 @@ The playbook is now used through explicit, copyable prompts. Nothing is installe
 ## 1.0 — 2026-11-11
 
 First public version.
-- **Synthesized** from seven projects, token telemetry and external research. See [REFERENCE.md](REFERENCE.md) §1.
+- **Synthesized** from seven projects, token telemetry and external research. See [REFERENCE.md](v1/REFERENCE.md) §1.
 - **Tested before release:**
   - a blind usability review across four unrelated tasks, which added generative-task, unreachable-oracle, contested-claim, irreversible-operation and short-task handling;
   - a 20-claim fact-check against the primary records;

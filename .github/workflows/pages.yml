@@ -33,10 +33,12 @@ jobs:
           destination: ./_site
       - name: Validate HTML
         run: npx --yes html-validate@9 "_site/**/*.html"
+      - name: Serve the built site under its real path for the link check
+        run: mkdir -p /tmp/linkroot && ln -s "$PWD/_site" /tmp/linkroot/agent-playbook
       - name: Check internal links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --offline --no-progress --root-dir "${{ github.workspace }}/_site" '_site/**/*.html'
+          args: --offline --no-progress --root-dir /tmp/linkroot '_site/**/*.html'
           fail: true
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main'
