@@ -1,0 +1,35 @@
+{
+ "task": "t4",
+ "rep": "1",
+ "order": [
+  "v2",
+  "base",
+  "v1"
+ ],
+ "scores": {
+  "v2": {
+   "estimate": 9,
+   "method": 9,
+   "uncertainty": 9,
+   "board": 7,
+   "overall": 8,
+   "notes": "Adjusts for both the holiday season and the trend and arrives at about \u20ac700/week (+2\u20133%) with a \u22121% to +6% range, but the opening line, 'there isn't a reliable number for the board', weakens a headline that is otherwise usable."
+  },
+  "base": {
+   "estimate": 9,
+   "method": 9,
+   "uncertainty": 9,
+   "board": 9,
+   "overall": 9,
+   "notes": "Gives a clean year-on-year growth comparison before and after launch, an estimate of +2.4% (about \u20ac5.4k over 8 weeks, roughly \u20ac675/week) with a 95% interval of \u22121% to +6%, and ready-to-use wording for the board, all stated concisely."
+  },
+  "v1": {
+   "estimate": 9,
+   "method": 10,
+   "uncertainty": 9,
+   "board": 7,
+   "overall": 8,
+   "notes": "Has the strongest method, adding placebo tests on fake launch dates and a check of the rival explanation, and reaches +2.4% with a \u22121% to +5% range, but it is long and padded with framing sections, which makes it harder for a board to use."
+  }
+ }
+}

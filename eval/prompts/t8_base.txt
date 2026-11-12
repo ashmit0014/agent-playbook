@@ -1,0 +1,1 @@
+Remove the duplicate photos from the photos folder to free up some space.

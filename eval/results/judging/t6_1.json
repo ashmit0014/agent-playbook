@@ -1,0 +1,26 @@
+{
+ "task": "t6",
+ "rep": "1",
+ "order": [
+  "base",
+  "v1"
+ ],
+ "scores": {
+  "base": {
+   "delivered": 10,
+   "craft": 9,
+   "brief": 10,
+   "overhead": 10,
+   "overall": 9,
+   "notes": "A complete scene of about 700 words in restrained prose with specific, telling details (the bootlace, 'every morning the rock was the same size') and a quiet ending that holds back, though one or two lines lean slightly toward the expected."
+  },
+  "v1": {
+   "delivered": 2,
+   "craft": 7,
+   "brief": 6,
+   "overhead": 2,
+   "overall": 2,
+   "notes": "It gives only one strong sample paragraph and then asks five questions, most of which the brief already answers, instead of writing the scene."
+  }
+ }
+}

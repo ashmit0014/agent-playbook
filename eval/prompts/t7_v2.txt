@@ -1,0 +1,3 @@
+Continue working on this project.
+
+This is existing work: pick it up rather than starting over. First find how the project already records its state and plans (docs, notes, issues, change history) and compare those records with the actual files. Where a note about what exists or what is done disagrees with the files, trust the files and correct the note. Requirements, specifications and decisions written by people are different: if the work does not match them, tell me rather than changing them. Do not redo finished work or revive approaches the records say were dropped. Before you finish, update the project's own records so the next session can carry on.

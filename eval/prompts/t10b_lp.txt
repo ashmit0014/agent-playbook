@@ -1,0 +1,1 @@
+Continue building the bank CSV converter: write the part that produces the file for my budgeting app, and a way to run the whole conversion from the command line.

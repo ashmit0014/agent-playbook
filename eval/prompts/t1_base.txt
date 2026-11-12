@@ -1,0 +1,1 @@
+summarize() in stats.py crashes on some of our CSV exports: they contain empty rows, such as lines that are just commas or just spaces. Please fix it so empty rows are ignored.

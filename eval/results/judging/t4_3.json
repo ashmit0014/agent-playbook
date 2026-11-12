@@ -1,0 +1,24 @@
+{
+ "task": "t4",
+ "rep": "3",
+ "order": [
+  "base",
+  "v2"
+ ],
+ "scores": {
+  "base": {
+   "estimate": 10,
+   "method": 10,
+   "uncertainty": 9,
+   "board": 9,
+   "notes": "Uses a year-on-year growth difference-in-differences that handles both seasonality and trend, lands at ~\u20ac700/week (+2.5%) with a 95% range of about \u22121.5% to +6.5%, and supplies clear board wording that warns against the 30% figure."
+  },
+  "v2": {
+   "estimate": 10,
+   "method": 10,
+   "uncertainty": 10,
+   "board": 8,
+   "notes": "Uses the same adjustment for trend and seasonality to reach ~\u20ac850/week (+3%) with a range of 0\u20136%, gives a thorough uncertainty check against pre-launch windows and lists confounders, but the headline is in euros over 8 weeks rather than per week and the answer is longer than a board needs."
+  }
+ }
+}

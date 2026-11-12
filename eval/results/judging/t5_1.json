@@ -1,0 +1,26 @@
+{
+ "task": "t5",
+ "rep": "1",
+ "order": [
+  "v1",
+  "base"
+ ],
+ "scores": {
+  "v1": {
+   "delivered": 10,
+   "constraints": 10,
+   "quality": 9,
+   "overhead": 6,
+   "overall": 8,
+   "notes": "A complete, well-judged email with a firm 48-hour deadline and a polite tone, but it's followed by a lengthy breakdown of why it's firm and polite that the user didn't need."
+  },
+  "base": {
+   "delivered": 10,
+   "constraints": 10,
+   "quality": 9,
+   "overhead": 9,
+   "overall": 9,
+   "notes": "A tight, ready-to-send email that is firm and polite, with only a short, useful note after it about filling in the placeholders and a possible follow-up."
+  }
+ }
+}

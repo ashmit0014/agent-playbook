@@ -1,6 +1,28 @@
 # Changelog
 
-`major.minor`: the minor number changes for wording, examples and evidence; the major number changes when a Rule changes. Each entry names the rule and the evidence behind the change.
+Versions are `major.minor.patch`. **Major:** what the site adds to a prompt changes in a way that needs new evaluation evidence (a paragraph added, removed or reworded). **Minor:** advice, documentation or evaluation results change without changing what is added. **Patch:** fixes that change no wording a user sees in a prompt. The version lives in `additions.json`; the automated checks fail if `_config.yml` or this file disagree with it. Each release is tagged in git (`v2.0.0`, and `v1.0`, `v1.1`, `v1.2` for the archived version 1).
+
+## 2.0.0 — 2026-11-12
+
+A reset. Version 1 was tested against a plain, clear request for the first time, on ten tasks; see [Evaluation](EVALUATION.html). The result changed what the product is.
+
+**What the site does now.** You write your request. If the work will continue in a later session, the site adds one tested paragraph asking the AI to record requirements, decisions, status and the next step. Otherwise it tells you to paste your request as it is. Two other situations (risky files, content from others) show advice for you and add nothing to the prompt.
+
+**Removed from what the AI receives:** the nine-principle Core, the 4,000-word playbook download, the five prompt types, the required project files (`AGENTS.md`, `CLAUDE.md`, `STATE.md`, `DECISIONS.md`), numeric limits, review and sample-first procedures, and model guidance. In the evaluation they raised cost on eight of ten tasks without improving outcomes overall, and failed a creative task.
+
+**Tested and not adopted:** paragraphs for direct verification, evidence handling, continuing existing work, protecting files, and planted instructions. Each either changed nothing measurable or traded quality for length. Their text is in `eval/tasks.py`.
+
+**Moved:** the lessons that held up are in [Notes](NOTES.html), written for people, with their support. The version 1 documents are archived unchanged under [`v1/`](v1/), with a summary of what went wrong.
+
+**Corrected:** v1's summaries of Xiang et al., Gloaguen et al. and CRBugBench (see the [v1 archive](v1/)). The trust model now distinguishes the tool's rules, your instructions, project instruction files you set up, documents you ask it to follow, and everything else.
+
+**Engineering:** the site deploys only through a workflow that first checks that the scripts parse, every combination composes, the generated text matches a reviewed snapshot, removed v1 instructions cannot return, versions agree, the HTML is valid and internal links work. After deploying, it confirms that the live site shows the new commit. The footer shows the version and build commit.
+
+**License:** code under MIT, documentation under CC BY 4.0, paste-able paragraphs under CC0. See `LICENSE`.
+
+**Accessibility:** landmarks, a skip link, labelled navigation with the current page marked, real headings and a fieldset for the form, form borders at 3:1 contrast, keyboard-scrollable tables, and copy results announced to screen readers.
+
+# Version 1 (archived)
 
 ## 1.2 — 2026-11-12
 

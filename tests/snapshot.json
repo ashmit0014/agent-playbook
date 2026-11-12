@@ -1,0 +1,4 @@
+{
+ "(none)": "Fix the export so it ignores empty rows.",
+ "later": "Fix the export so it ignores empty rows.\n\nThis work will continue in later sessions that cannot see this conversation. Before you finish, make sure the project itself records what a newcomer would need to carry on: the goal, the requirements and decisions I have given you and why, what is done and how it was checked, what is still open, and the next step. Put this in the project's existing notes or docs if it has them; otherwise add one short notes file. Leave out passwords, keys and personal details."
+}

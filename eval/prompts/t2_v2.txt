@@ -1,0 +1,3 @@
+Add due dates to todo.py: `add` should accept an optional `--due YYYY-MM-DD`, and `list --overdue` should show only tasks that are not done and whose due date is before today. Existing todo.json files without due dates must keep working.
+
+A mistake here that nobody notices would be costly. Before you say it is finished, check the result directly: run it, try realistic and edge cases, or compare it against the source. Then tell me what you checked and what you could not check. Do not describe anything as working if you did not see it work.

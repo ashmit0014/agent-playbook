@@ -1,0 +1,26 @@
+{
+ "task": "t4",
+ "rep": "2",
+ "order": [
+  "v2",
+  "base"
+ ],
+ "scores": {
+  "v2": {
+   "estimate": 8,
+   "method": 9,
+   "uncertainty": 9,
+   "board": 7,
+   "overall": 8,
+   "notes": "P corrects for both seasonality and trend and lands near +2% (about \u20ac650/week) with a placebo-backed range of \u22122% to +7% that contains the true effect, but it tells the board there is 'no measurable effect' rather than giving a tentative positive number."
+  },
+  "base": {
+   "estimate": 9,
+   "method": 9,
+   "uncertainty": 8,
+   "board": 9,
+   "overall": 9,
+   "notes": "Q adjusts for both seasonality and trend and gives a clear headline of about +2.5% (about \u20ac700/week) with a usable board line and honest caveats, though it gives no formal interval and calls the result indistinguishable from zero."
+  }
+ }
+}

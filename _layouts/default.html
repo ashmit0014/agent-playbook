@@ -3,108 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% if page.title and page.title != site.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
-<meta name="description" content="{{ site.description }}">
-<meta property="og:title" content="{{ page.title | default: site.title }}">
-<meta property="og:description" content="{{ site.description }}">
+{% assign pt = page.title | default: site.title %}
+<title>{% if pt != site.title %}{{ pt }} · {% endif %}{{ site.title }}</title>
+<meta name="description" content="{{ page.description | default: site.description }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<meta property="og:title" content="{{ pt }}">
+<meta property="og:description" content="{{ page.description | default: site.description }}">
 <meta property="og:type" content="website">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta name="color-scheme" content="light dark">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f5d50'/%3E%3Cpath d='M9 22V10h7a4 4 0 0 1 0 8H9' stroke='white' stroke-width='3' fill='none'/%3E%3C/svg%3E">
-<style>
-:root{--bg:#fbfaf7;--fg:#1d2321;--muted:#5d6764;--line:#e2dfd7;--card:#f2efe8;--accent:#2f5d50;--accent-fg:#fff;--code:#efece4}
-@media (prefers-color-scheme:dark){:root{--bg:#141716;--fg:#e6e9e7;--muted:#9aa5a1;--line:#2b302e;--card:#1c201f;--accent:#7fc0ab;--accent-fg:#0e1211;--code:#222725}}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.62 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-a{color:var(--accent)}
-header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
-.bar{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-.brand{font-weight:700;color:var(--fg);text-decoration:none;letter-spacing:-.01em;margin-right:6px}
-.brand:before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--accent);margin-right:8px;vertical-align:1px}
-nav.top{display:flex;gap:2px;flex-wrap:wrap;font-size:15px}
-nav.top a{color:var(--muted);text-decoration:none;padding:4px 9px;border-radius:6px}
-nav.top a:hover{color:var(--fg);background:var(--card)}
-nav.top a.on{color:var(--fg);background:var(--card);font-weight:600}
-.wrap{max-width:1120px;margin:0 auto;padding:28px 16px 64px;display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
-@media (min-width:1000px){.wrap.has-toc{grid-template-columns:minmax(0,760px) 230px;justify-content:center}}
-article{min-width:0;max-width:760px;margin:0 auto;width:100%}
-article.wide{max-width:940px}
-aside.toc{display:none}
-@media (min-width:1000px){aside.toc{display:block;position:sticky;top:70px;align-self:start;font-size:13.5px;max-height:calc(100vh - 90px);overflow:auto}}
-aside.toc b{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-aside.toc a{display:block;color:var(--muted);text-decoration:none;padding:3px 0;line-height:1.35}
-aside.toc a:hover{color:var(--fg)}
-details.toc-m{margin:0 0 20px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14.5px}
-@media (min-width:1000px){details.toc-m{display:none}}
-details.toc-m a{display:block;padding:3px 0;text-decoration:none}
-a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
-h1{font-size:2.1rem;line-height:1.2;letter-spacing:-.02em;margin:.2em 0 .5em}
-h2{font-size:1.35rem;margin:2.2em 0 .6em;padding-top:.4em;border-top:1px solid var(--line);letter-spacing:-.01em}
-h3{font-size:1.08rem;margin:1.8em 0 .5em}
-h2,h3{scroll-margin-top:70px}
-p,li{max-width:72ch}
-li{margin:.25em 0}
-code{background:var(--code);padding:.1em .35em;border-radius:4px;font-size:.88em;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
-pre{background:var(--code);padding:14px 16px;border-radius:8px;overflow:auto;font-size:14px;line-height:1.5}
-pre code{background:none;padding:0}
-.scroll{overflow-x:auto;margin:1em 0;border:1px solid var(--line);border-radius:8px}
-table{border-collapse:collapse;width:100%;font-size:14.5px}
-th,td{text-align:left;vertical-align:top;padding:8px 11px;border-bottom:1px solid var(--line)}
-tr:last-child td{border-bottom:none}
-th{background:var(--card);font-weight:600}
-td p{margin:0}
-hr{border:none;border-top:1px solid var(--line);margin:2em 0}
-blockquote{margin:1em 0;padding:.2em 1em;border-left:3px solid var(--accent);color:var(--muted)}
-em:first-child{color:var(--muted)}
-.copy{display:inline-flex;align-items:center;gap:6px;margin:4px 0 18px;background:var(--accent);color:var(--accent-fg);border:0;border-radius:7px;padding:9px 14px;font:600 14.5px system-ui,sans-serif;cursor:pointer}
-.copy:active{transform:translateY(1px)}
-footer.site{border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
-footer.site .bar{padding:18px 16px}
-</style>
+<link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 {% assign p = page.url | remove: ".html" %}
 <header class="site"><div class="bar">
   <a class="brand" href="{{ '/' | relative_url }}">Agent Playbook</a>
-  <nav class="top">
-    <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="on"{% endif %}>Get a prompt</a>
-    <a href="{{ '/CORE.html' | relative_url }}" {% if p == '/CORE' %}class="on"{% endif %}>Core</a>
-    <a href="{{ '/PLAYBOOK.html' | relative_url }}" {% if p == '/PLAYBOOK' %}class="on"{% endif %}>Playbook</a>
-    <a href="{{ '/REFERENCE.html' | relative_url }}" {% if p == '/REFERENCE' %}class="on"{% endif %}>Reference</a>
-    <a href="{{ '/EVIDENCE.html' | relative_url }}" {% if p == '/EVIDENCE' %}class="on"{% endif %}>Evidence</a>
+  <nav aria-label="Main">
+    <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Make a prompt</a>
+    <a href="{{ '/EVALUATION.html' | relative_url }}" {% if p == '/EVALUATION' %}aria-current="page"{% endif %}>Evaluation</a>
+    <a href="{{ '/NOTES.html' | relative_url }}" {% if p == '/NOTES' %}aria-current="page"{% endif %}>Notes</a>
+    <a href="{{ '/v1/' | relative_url }}" {% if page.url contains '/v1/' %}aria-current="page"{% endif %}>Version 1</a>
     <a href="https://github.com/{{ site.repository }}">GitHub</a>
   </nav>
 </div></header>
-<div class="wrap" id="wrap">
-<article id="doc"{% if page.wide %} class="wide"{% endif %}>
+<main id="main" tabindex="-1"><article{% if page.tool %} class="tool-page"{% endif %}>
+{% if page.url contains '/v1/' and page.url != '/v1/' %}<p class="archived"><b>Archived: version 1.2.</b> This document is kept as it was published, so you can see what version 1 said and why. It is no longer the current advice. <a href="{{ '/v1/' | relative_url }}">What changed in version 2</a>.</p>{% endif %}
 {{ content }}
-</article>
-</div>
+</article></main>
 <footer class="site"><div class="bar">
-  <span>Agent Playbook · source and history on <a href="https://github.com/{{ site.repository }}">GitHub</a> · <a href="{{ '/CHANGELOG.html' | relative_url }}">changelog</a></span>
+  <span>Agent Playbook <span data-version>{{ site.version }}</span>{% if site.github.build_revision %} · build <a href="https://github.com/{{ site.repository }}/commit/{{ site.github.build_revision }}">{{ site.github.build_revision | slice: 0, 7 }}</a>{% endif %}</span>
+  <span><a href="{{ '/CHANGELOG.html' | relative_url }}">Changes</a> · <a href="https://github.com/{{ site.repository }}/blob/main/README.md#license">License</a></span>
 </div></footer>
 <script>
-(function(){
-  var doc=document.getElementById('doc');
-  doc.querySelectorAll('table').forEach(function(t){var d=document.createElement('div');d.className='scroll';t.parentNode.insertBefore(d,t);d.appendChild(t);});
-  var hs=doc.querySelectorAll('h2');
-  if(hs.length>=4){
-    var links='';hs.forEach(function(h){if(h.id)links+='<a href="#'+h.id+'">'+h.textContent+'</a>';});
-    var a=document.createElement('aside');a.className='toc';a.innerHTML='<b>On this page</b>'+links;
-    document.getElementById('wrap').appendChild(a);document.getElementById('wrap').classList.add('has-toc');
-    var m=document.createElement('details');m.className='toc-m';m.innerHTML='<summary>On this page</summary>'+links;
-    var h1=doc.querySelector('h1');(h1&&h1.nextElementSibling?h1.nextElementSibling:doc.firstChild).after(m);
-  }
-  if(/\/CORE(\.html)?$/.test(location.pathname)){
-    var ol=doc.querySelector('ol');if(!ol)return;
-    var b=document.createElement('button');b.className='copy';b.type='button';b.textContent='Copy the Core for a prompt';
-    b.onclick=function(){
-      var t='Agent Playbook — Core (https://ashmit0014.github.io/agent-playbook/)\n\n';
-      ol.querySelectorAll(':scope > li').forEach(function(li,i){t+=(i+1)+'. '+li.innerText.replace(/\s+/g,' ').trim()+'\n';});
-      navigator.clipboard.writeText(t).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy the Core for a prompt';},1600);});
-    };
-    ol.parentNode.insertBefore(b,ol);
-  }
-})();
+document.querySelectorAll('main table').forEach(function (t) {
+  var w = document.createElement('div'); w.className = 'scroll'; w.tabIndex = 0;
+  w.setAttribute('role', 'region'); w.setAttribute('aria-label', 'Table, scrolls sideways');
+  t.parentNode.insertBefore(w, t); w.appendChild(t);
+  t.querySelectorAll('th').forEach(function (th) { th.setAttribute('scope', 'col'); });
+});
 </script>
 </body>
 </html>

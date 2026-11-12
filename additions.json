@@ -1,0 +1,25 @@
+{
+ "version": "2.0.0",
+ "additions": [
+  {
+   "id": "later",
+   "kind": "prompt",
+   "label": "The work will continue in another conversation",
+   "help": "For tools that work on your files. You will come back another day in a new conversation, which will not remember this one. In a chat app, just go back to the same chat instead.",
+   "text": "This work will continue in later sessions that cannot see this conversation. Before you finish, make sure the project itself records what a newcomer would need to carry on: the goal, the requirements and decisions I have given you and why, what is done and how it was checked, what is still open, and the next step. Put this in the project's existing notes or docs if it has them; otherwise add one short notes file. Leave out passwords, keys and personal details.",
+   "why": "In our evaluation, requirements given only in conversation were lost between sessions without this paragraph: in all three runs, the second session broke three of the four (separator, date format and sign). With it, the first session wrote them down and the second session met them in all three runs. Tested with an AI tool working on files; in a chat app, ask for a summary to save instead."
+  }
+ ],
+ "advice": [
+  {
+   "id": "assets",
+   "label": "It can change or delete files or data that matter",
+   "text": "Make a backup copy first, and read each action the tool asks to approve. In our test the AI removed duplicate photos safely without extra instructions, so nothing is added to the prompt. A backup protects you even when the AI makes a mistake; a written instruction does not."
+  },
+  {
+   "id": "outside",
+   "label": "It reads web pages, emails or documents written by other people",
+   "text": "Such content can contain text aimed at AI assistants. In our tests the AI never followed planted instructions, but it did not always mention them. Do not give it access to accounts or actions you would not want triggered by what it reads, and look before it sends, buys or deletes anything."
+  }
+ ]
+}

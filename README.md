@@ -5,67 +5,38 @@
 
 # Agent Playbook
 
-**Operating rules for AI agents (Claude, Fable, Opus, Codex, ChatGPT and others) doing real work with little supervision.** It covers software, research, analysis, writing, planning and audits. The rules are distilled from real projects that failed, were measured and were corrected, not from generic productivity advice.
+**Add only the instructions that measurably help an AI assistant with your task. Often that is nothing.**
+
+Version 1 of this project was a large set of operating rules for AI agents, drawn from real projects that went wrong. Version 2 tested those rules against a plain, clear request on ten realistic tasks. For most tasks the plain request did as well or better, and was cheaper. One situation needed help: work that continues in a later session, where requirements given in conversation were lost. So the site now adds one tested paragraph for that situation, and otherwise tells you to paste your request as it is.
 
 ## Use it
 
 1. Open **https://ashmit0014.github.io/agent-playbook/**.
-2. Pick the kind of work and where you will paste the prompt, and optionally type your goal.
-3. If the page lists a file (for a new project, `PLAYBOOK.md`), download it and put it in your project folder, or attach it in a chat app.
-4. Press **Copy prompt** and paste it into your agent.
+2. Write what you want the AI to do.
+3. Tick "The work will continue in another conversation" if you will come back to it in a tool that works on your files.
+4. Copy the result into your AI tool.
 
-Nothing is installed or loaded in the background. You see exactly what the agent gets.
+Nothing is installed and no files are required. You see exactly what the site adds to your request. Your AI tool also follows its own rules, which this site cannot see or change.
 
-The site offers five prompts:
+## What is here
 
-| Prompt | For | Files |
-|---|---|---|
-| **Quick task** | One sitting, low stakes | None; self-contained |
-| **New project** | Software or product work over several sessions, with the agent leading | `PLAYBOOK.md` (required) in the project root. The agent creates `AGENTS.md`, `STATE.md` and `DECISIONS.md` itself |
-| **Research or analysis** | Investigations, data analysis, audits, decision memos | None. `PLAYBOOK.md` is optional for long investigations |
-| **Writing or creative** | Writing and design where your taste decides | None |
-| **Continue a project** | Resuming any existing project, whether or not it started here | None. The agent finds and keeps the project's own notes and conventions; in a chat app, attach or paste whatever notes you have |
-
-Every prompt contains the nine-principle [Core](CORE.md). The new-project prompt also points the agent at specific sections of `PLAYBOOK.md`, to be read when they become relevant.
-
-## What it is, and what it is not
-
-It is a small body of rules about the decisions that most often go wrong when an agent works on its own:
-- what counts as evidence that something works;
-- what to prove first;
-- what to decide alone and what to bring to the human;
-- when to stop iterating;
-- how to use other models without mistaking agreement for truth;
-- how to keep context useful;
-- where to spend expensive reasoning.
-
-It is not a framework, a plugin or an agent platform. It does not try to make agents fully autonomous; it tries to put the human exactly where human judgment or authority is needed.
-
-## Files
-
-| File | What it is |
+| | |
 |---|---|
-| [CORE.md](CORE.md) | Nine principles, about 400 words. Included in every prompt |
-| [PLAYBOOK.md](PLAYBOOK.md) | The operating layer: decision rules, defaults, stop conditions, review, context, resources. About 4,100 words |
-| [REFERENCE.md](REFERENCE.md) | Why each rule exists, the earlier rules it corrected, conditional rules, how it was tested |
-| [EVIDENCE.md](EVIDENCE.md) | What each rule rests on: cases, measurements, external sources |
-| [CHANGELOG.md](CHANGELOG.md) | Version history |
-| `index.html` | The website's prompt builder. It reads `CORE.md` and `PLAYBOOK.md` directly, so prompts and downloads always match the canonical files |
+| [`index.html`](index.html), [`assets/`](assets/), [`additions.json`](additions.json) | The page. `additions.json` is the single source for what the site can add, its version, and the advice it shows. |
+| [`EVALUATION.md`](EVALUATION.md) | How each candidate addition was tested, what helped and what did not, and the limits of the test. |
+| [`NOTES.md`](NOTES.md) | Lessons for people: who may give an agent instructions, current state versus requirements, how sure a claim is, and the v1 lessons that held up. Nothing here is sent to the AI. |
+| [`eval/`](eval/) | The evaluation: fixtures, requests, candidate paragraphs, graders, judge, and every final answer. |
+| [`v1/`](v1/) | Version 1, archived unchanged, with an account of what went wrong. Exact files are in tags `v1.0`, `v1.1`, `v1.2`. |
+| [`tests/`](tests/) | Checks that run before every deployment. |
 
-## How rules are labelled and changed
+## Changing what the site adds
 
-Every rule in the playbook carries one of these labels:
-- **Rule:** held across every kind of work in the evidence.
-- **Default:** do it unless the situation clearly differs.
-- **Current models:** an observation about today's models and tools, expected to go stale as they improve. These are the parts to recheck first.
-- **Provisional hypotheses** are listed in [REFERENCE.md](REFERENCE.md) §7, outside the playbook, until evidence promotes or drops them.
-
-A rule changes only on evidence stronger than what supports it now. Each change gets a [CHANGELOG](CHANGELOG.md) line and an [EVIDENCE.md](EVIDENCE.md) row. If it overturns an earlier rule, it also gets a row in the corrections table in [REFERENCE.md](REFERENCE.md) §3. Versions are `major.minor`: minor for wording, prompts and evidence; major when a Rule changes.
+Change a paragraph only with evidence: run the relevant tasks in `eval/` with the old and new text, then update `additions.json`, the version, `CHANGELOG.md` and the snapshot (`node tests/check.js --update`, after reviewing the diff). The deploy workflow refuses to publish if the checks fail.
 
 ## License
 
-No license has been chosen yet, so all rights are reserved by default: you may read and link to this material, but not reuse it.
+- Code (`assets/`, `_layouts/`, `tests/`, `eval/*.py`, `.github/`): MIT.
+- The paragraphs the site adds to prompts (the `text` fields in `additions.json`): CC0. Use them however you like, without credit.
+- All other writing: CC BY 4.0. Share and adapt it with credit to "Agent Playbook by Ashmit Kundu".
 
-## Provenance
-
-The rules come from seven private projects over about five weeks: games, mobile apps, an image-generation workflow, a data-safety tool and a machine audit. They also draw on token telemetry from 387 agent sessions and on published research on agent instruction files and code review. The public files describe that evidence in anonymized, aggregate form; the underlying records are kept privately.
+Full terms are in [`LICENSE`](LICENSE).

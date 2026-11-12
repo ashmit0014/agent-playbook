@@ -1,0 +1,1 @@
+Add a function to analyze.py that counts how many feedback entries in data/feedback.txt mention colour (either spelling), a small command-line entry point that prints the count, and a test.

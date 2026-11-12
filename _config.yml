@@ -1,5 +1,6 @@
 title: Agent Playbook
-description: Operating rules for AI agents doing real work with little supervision.
+description: Add only the instructions that measurably help an AI assistant with your task. Often that is nothing.
+version: "2.0.0"
 repository: ashmit0014/agent-playbook
 markdown: kramdown
 kramdown:
@@ -8,6 +9,8 @@ kramdown:
 exclude:
   - private
   - README.md
+  - tests
+  - eval
 defaults:
   - scope:
       path: ""

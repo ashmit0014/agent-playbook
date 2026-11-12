@@ -3,3 +3,4 @@ private/
 _site/
 .jekyll-cache/
 *.tmp
+.claude/

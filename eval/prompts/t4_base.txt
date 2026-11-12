@@ -1,0 +1,1 @@
+We launched the redesigned website on 2025-11-03. Using weekly_sales.csv, did the new website increase sales, and by how much? I need a number for the board.
