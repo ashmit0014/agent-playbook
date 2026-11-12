@@ -7,7 +7,7 @@ tool: true
 <p class="lead">This page has no AI in it. It helps you write the message you paste into an AI tool such as ChatGPT, Claude or Gemini. Write your request, tick what applies, and copy the result.</p>
 <p>Most of the time the result is just your request: in <a href="EVALUATION.html">our tests</a>, a clear request worked as well as a long list of rules, and often better. The exception was work spread over several conversations, so that is the one case where the page adds something.</p>
 
-<form id="tool" class="tool" onsubmit="return false">
+<div id="tool" class="tool">
   <section class="step" aria-labelledby="s1">
     <h2 id="s1"><span class="n" aria-hidden="true">1</span> What do you want the AI to do?</h2>
     <p class="hint" id="req-hint">Write it as you would to a capable colleague: what you want, what a good result looks like, and anything to avoid. Mention any documents it should use, and attach them when you paste. If you want to see a sample before it does everything, say so.</p>
@@ -45,7 +45,7 @@ tool: true
     </details>
   </section>
   <noscript><p class="warn">This page needs JavaScript to combine the text. Without it, copy your request and add any paragraph from <a href="EVALUATION.html">the evaluation page</a> by hand.</p></noscript>
-</form>
+</div>
 
 <section class="below">
   <h2>What this is</h2>
